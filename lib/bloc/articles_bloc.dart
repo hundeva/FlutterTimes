@@ -10,6 +10,15 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
   final NyTimesApi _api = NyTimesApi();
 
   int _page = 0;
+  bool _isLoading = false;
+
+  @override
+  void dispatch(ArticlesEvent event) {
+    // TODO for now, drop the events when loading is in progress, figure something better out
+    if (!_isLoading) {
+      super.dispatch(event);
+    }
+  }
 
   @override
   ArticlesState get initialState => ArticlesState.initial();
@@ -19,6 +28,7 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
     ArticlesState state,
     ArticlesEvent event,
   ) async* {
+    _isLoading = true;
     if (event is LoadDefaultArticles) {
       _page = 0;
       NyTimesArticles storedArticles = await _store.getDefaultArticles();
@@ -26,17 +36,26 @@ class ArticlesBloc extends Bloc<ArticlesEvent, ArticlesState> {
         yield ArticlesState.fromArticles(storedArticles);
       }
 
-      NyTimesArticles apiArticles = await _api.getMostPopularArticles();
-      _store.setDefaultArticles(apiArticles);
-      yield ArticlesState.fromArticles(apiArticles);
+      try {
+        NyTimesArticles apiArticles = await _api.getMostPopularArticles();
+        _page++;
+        _store.setDefaultArticles(apiArticles);
+        yield ArticlesState.fromArticles(apiArticles);
+      } catch (e) {
+        print('Error reading API: $e');
+      }
     } else if (event is LoadNextPageArticles) {
       int offset = _page * _offset;
-      NyTimesArticles apiArticles =
-          await _api.getMostPopularArticles(offset: offset).then((articles) {
+      try {
+        NyTimesArticles apiArticles =
+            await _api.getMostPopularArticles(offset: offset);
         _page++;
-      });
-      yield state.copyWithNewPage(apiArticles);
+        yield state.copyWithNewPage(apiArticles);
+      } catch (e) {
+        print('Error reading API: $e');
+      }
     }
+    _isLoading = false;
   }
 }
 

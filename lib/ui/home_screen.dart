@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_times/app/strings.dart';
+import 'package:flutter_times/app/styles.dart';
 import 'package:flutter_times/bloc/articles_bloc.dart';
 import 'package:flutter_times/bloc/preference_bloc.dart';
+import 'package:flutter_times/model/ny_times_model.dart';
 import 'package:flutter_times/model/preference_model.dart';
+import 'package:flutter_times/ui/article_item.dart';
 import 'package:flutter_times/widget/text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -118,6 +121,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _articles(ArticlesState state) {
     return state?.articles?.isEmpty ?? true
         ? Center(child: CircularProgressIndicator())
-        : Text(state.articles.length.toString());
+        : ListView.builder(
+            itemCount: state.articles.length,
+            itemBuilder: (_, int index) => _item(state.articles[index]),
+          );
+  }
+
+  Widget _item(NyTimesArticle article) {
+    Widget item;
+    AppStyle style = AppStyles.of(context).style;
+    switch (style) {
+      case AppStyle.compact:
+        item = CompactArticleItem(article: article);
+        break;
+      case AppStyle.list:
+        item = ListArticleItem(article: article);
+        break;
+      case AppStyle.card:
+        item = CardArticleItem(article: article);
+        break;
+    }
+    return item;
   }
 }
