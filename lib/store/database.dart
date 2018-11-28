@@ -22,7 +22,7 @@ Future<bool> setupDatabase() async {
       version: _databaseVersion,
     );
 
-    preferences = _database.findStore(_preferenceStoreName);
+    preferences = _database.getStore(_preferenceStoreName);
     return Future.value(true);
   } catch (e) {
     return Future.value(false);

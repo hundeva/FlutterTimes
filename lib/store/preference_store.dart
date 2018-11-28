@@ -16,7 +16,7 @@ class PreferenceStore {
     );
   }
 
-  Future<AppTheme> setTheme(AppTheme theme) async {
+  Future setTheme(AppTheme theme) async {
     return preferences.put(theme.toString(), _theme);
   }
 
@@ -28,7 +28,7 @@ class PreferenceStore {
     );
   }
 
-  Future<AppLocale> setLocale(AppLocale locale) async {
+  Future setLocale(AppLocale locale) async {
     return preferences.put(locale.toString(), _locale);
   }
 
@@ -40,7 +40,7 @@ class PreferenceStore {
     );
   }
 
-  Future<AppStyle> setStyle(AppStyle style) async {
+  Future setStyle(AppStyle style) async {
     return preferences.put(style.toString(), _style);
   }
 }
