@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_times/app/strings.dart';
+import 'package:flutter_times/bloc/articles_bloc.dart';
 import 'package:flutter_times/bloc/preference_bloc.dart';
 import 'package:flutter_times/model/preference_model.dart';
 import 'package:flutter_times/widget/text_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final ArticlesBloc _bloc = ArticlesBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.dispatch(LoadDefaultArticles());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,8 +109,15 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _body(BuildContext context) {
-    return Center(
-      child: Text('Home'),
+    return BlocBuilder<ArticlesEvent, ArticlesState>(
+      bloc: _bloc,
+      builder: (BuildContext context, ArticlesState state) => _articles(state),
     );
+  }
+
+  Widget _articles(ArticlesState state) {
+    return state?.articles?.isEmpty ?? true
+        ? Center(child: CircularProgressIndicator())
+        : Text(state.articles.length.toString());
   }
 }
