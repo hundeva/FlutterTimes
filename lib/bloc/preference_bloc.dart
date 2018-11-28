@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_times/app/flutter_times.dart';
+import 'package:flutter_times/model/preference_model.dart';
+import 'package:flutter_times/store/preference_store.dart';
 
 class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
+  final PreferenceStore _store = const PreferenceStore();
+
   @override
   PreferenceState get initialState => PreferenceState.initial();
 
@@ -11,8 +14,26 @@ class PreferenceBloc extends Bloc<PreferenceEvent, PreferenceState> {
     PreferenceState state,
     PreferenceEvent event,
   ) async* {
-    // TODO
-    yield null;
+    PreferenceState newState;
+    if (event is LoadPreferences) {
+      newState = PreferenceState(
+        theme: await _store.getTheme(),
+        locale: await _store.getLocale(),
+        style: await _store.getStyle(),
+      );
+    } else if (event is ThemeChanged) {
+      newState = state.copyWith(theme: event.value);
+      _store.setTheme(event.value);
+    } else if (event is LocaleChanged) {
+      newState = state.copyWith(locale: event.value);
+      _store.setLocale(event.value);
+    } else if (event is StyleChanged) {
+      newState = state.copyWith(style: event.value);
+      _store.setStyle(event.value);
+    } else {
+      throw UnimplementedError('$event is not implemented');
+    }
+    yield newState;
   }
 }
 
