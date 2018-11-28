@@ -141,6 +141,12 @@ class _HomeScreenState extends State<HomeScreen> {
         item = CardArticleItem(article: article);
         break;
     }
-    return item;
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+        horizontal: 16.0,
+      ),
+      child: item,
+    );
   }
 }
