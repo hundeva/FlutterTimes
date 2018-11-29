@@ -119,12 +119,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _articles(ArticlesState state) {
-    return state?.articles?.isEmpty ?? true
-        ? Center(child: CircularProgressIndicator())
-        : ListView.builder(
-            itemCount: state.articles.length,
-            itemBuilder: (_, int index) => _item(state.articles[index]),
-          );
+    return state?.articles?.isEmpty ?? true ? _progress() : _list(state);
+  }
+
+  Widget _progress() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _list(ArticlesState state) {
+    // TODO add RefreshIndicator widget here, figure out how to connect it with the bloc approach
+    return ListView.builder(
+      itemCount: state.articles.length,
+      itemBuilder: (_, int index) => _item(state.articles[index]),
+    );
   }
 
   Widget _item(NyTimesArticle article) {
