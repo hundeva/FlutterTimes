@@ -12,7 +12,10 @@ class CompactArticleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(article.title);
+    return ListTile(
+      title: Text(article.title),
+      onTap: () {},
+    );
   }
 }
 
@@ -26,24 +29,11 @@ class ListArticleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        _thumbnail(article),
-        Container(width: 16.0),
-        Flexible(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(article.title),
-              Container(height: 8.0),
-              Text(article.byline),
-            ],
-          ),
-        ),
-      ],
+    return ListTile(
+      leading: _thumbnail(article),
+      title: Text(article.title),
+      subtitle: Text(article.byline),
+      onTap: () {},
     );
   }
 }
@@ -59,7 +49,12 @@ class CardArticleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: ListArticleItem(article: article),
+      child: ListTile(
+        leading: _thumbnail(article),
+        title: Text(article.title),
+        subtitle: Text(article.byline),
+        onTap: () {},
+      ),
     );
   }
 }
