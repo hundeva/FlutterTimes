@@ -91,4 +91,14 @@ class AppStrings extends InheritedWidget {
         en: 'Card',
         hu: 'Kártya',
       );
+
+  String get articleDetails => _translated(
+        en: 'Article details',
+        hu: 'Cikk részletek',
+      );
+
+  String get openArticle => _translated(
+        en: 'Read article',
+        hu: 'Cikk olvasása',
+      );
 }
