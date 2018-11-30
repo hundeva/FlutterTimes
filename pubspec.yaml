@@ -20,6 +20,7 @@ dependencies:
   dio: ^1.0.9
   transparent_image: ^0.1.0
   webview_flutter: ^0.0.1
+  url_launcher: ^4.0.2
 
 dev_dependencies:
   flutter_test:
