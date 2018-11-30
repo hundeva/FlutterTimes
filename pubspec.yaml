@@ -32,3 +32,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/launcher/rss_icon.png'
+  adaptive_icon_background: '#009688'
+  adaptive_icon_foreground: 'assets/launcher/rss_icon.png'
