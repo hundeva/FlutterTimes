@@ -59,7 +59,7 @@ class ArticleScreen extends StatelessWidget {
                   horizontal: 16.0,
                 ),
                 child: Text(
-                  article.byline,
+                  article.byline ?? '',
                   style: Theme.of(context).textTheme.body1,
                 ),
               ),

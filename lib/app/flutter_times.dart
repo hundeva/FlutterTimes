@@ -15,6 +15,12 @@ class _FlutterTimesAppState extends State<FlutterTimesApp> {
   final PreferenceBloc _preferenceBloc = PreferenceBloc();
 
   @override
+  void initState() {
+    super.initState();
+    _preferenceBloc.dispatch(LoadPreferences());
+  }
+
+  @override
   Widget build(BuildContext context) => _bloc(context);
 
   Widget _bloc(BuildContext context) {

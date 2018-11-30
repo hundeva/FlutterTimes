@@ -53,7 +53,7 @@ class CardArticleItem extends StatelessWidget {
       child: ListTile(
         leading: _thumbnail(article),
         title: Text(article.title),
-        subtitle: Text(article.byline),
+        subtitle: Text(article.byline ?? ''),
         onTap: () => _openArticle(context, article),
       ),
     );
