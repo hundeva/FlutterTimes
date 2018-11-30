@@ -101,4 +101,9 @@ class AppStrings extends InheritedWidget {
         en: 'Read article',
         hu: 'Cikk olvasása',
       );
+
+  String get articleReader => _translated(
+        en: 'Article reader',
+        hu: 'Cikk olvasó',
+      );
 }

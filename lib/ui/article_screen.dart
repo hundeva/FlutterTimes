@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_times/app/strings.dart';
 import 'package:flutter_times/model/ny_times_model.dart';
+import 'package:flutter_times/ui/webview_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class ArticleScreen extends StatelessWidget {
@@ -73,7 +74,11 @@ class ArticleScreen extends StatelessWidget {
     return BottomAppBar(
       child: MaterialButton(
         child: Text(AppStrings.of(context).openArticle),
-        onPressed: () {},
+        onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => WebViewScreen(url: article.url),
+              ),
+            ),
       ),
     );
   }
